@@ -2,6 +2,7 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 
+from config import batch_size, num_workers, epochs, lr, weight_decay
 from data.data_utils import load_train_data, load_test_data
 from model import CNN_classifier
 from model_utils import test_model, get_lr
@@ -13,12 +14,6 @@ import torch.nn as nn
 transform = transforms.Compose(
     [transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-
-batch_size = 512
-epochs = 100
-num_workers = 16
-lr = 1e-5
-weight_decay = 1e-8
 
 # dataset loaders
 train_loader = load_train_data(batch_size, num_workers)

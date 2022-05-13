@@ -13,10 +13,7 @@ def create_conv_encoder(in_channels, hidden_layers, device="cpu"):
 
     # add the hidden layers in the encoder
     if hidden_layers is None:
-        hidden_layers = [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512]        # VGG11
-        # hidden_layers = [64, 'M', 128, 'M', 256, 256]
-        # hidden_layers = [64, 128, 256, 512]
-
+        hidden_layers = [32, 64, 128, 256, 512]
 
     # Build Encoder
     for h_dim in hidden_layers[:-1]:

@@ -1,9 +1,9 @@
 verbose = False
 resume = False
-lr = 1e-3
-weight_decay = 1e-8
-epochs = 10
 batch_size = 1024
+epochs = 10
+lr = 1e-5
+weight_decay = 1e-8
 kernel_size = 3
 num_workers = 16
 save_integral = 10
