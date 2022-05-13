@@ -14,7 +14,7 @@ transform = transforms.Compose(
     [transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-batch_size = 2048
+batch_size = 512
 epochs = 100
 num_workers = 16
 lr = 1e-5
@@ -41,7 +41,7 @@ dataiter = iter(train_loader)
 images, labels = dataiter.next()
 
 # show images
-imshow(torchvision.utils.make_grid(images))
+# imshow(torchvision.utils.make_grid(images))
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 

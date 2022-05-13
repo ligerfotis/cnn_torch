@@ -13,16 +13,23 @@ def create_conv_encoder(in_channels, hidden_layers, device="cpu"):
 
     # add the hidden layers in the encoder
     if hidden_layers is None:
-        hidden_layers = [32, 64, 128, 256, 512]
+        hidden_layers = [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512]        # VGG11
+        # hidden_layers = [64, 'M', 128, 'M', 256, 256]
+        # hidden_layers = [64, 128, 256, 512]
+
 
     # Build Encoder
     for h_dim in hidden_layers[:-1]:
-        layers.append(
-            torch.nn.Conv2d(in_channels, out_channels=h_dim, kernel_size=kernel, stride=stride, padding=padding))
-        layers.append(torch.nn.BatchNorm2d(h_dim))
-        layers.append(torch.nn.ReLU(True))
-        feature_map_size = int((feature_map_size - kernel + 2 * padding) / stride) + 1
-        in_channels = h_dim
+        if h_dim == 'M':
+            layers.append(torch.nn.MaxPool2d(kernel_size=2, stride=2))
+        else:
+
+            layers.append(
+                torch.nn.Conv2d(in_channels, out_channels=h_dim, kernel_size=kernel, stride=stride, padding=padding))
+            layers.append(torch.nn.BatchNorm2d(h_dim))
+            layers.append(torch.nn.ReLU(True))
+            feature_map_size = int((feature_map_size - kernel + 2 * padding) / stride) + 1
+            in_channels = h_dim
 
     layers.append(
         torch.nn.Conv2d(in_channels, out_channels=hidden_layers[-1], kernel_size=kernel, stride=stride, padding=0))
