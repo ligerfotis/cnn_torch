@@ -1,15 +1,31 @@
+import argparse
+
 import torch
 import torchvision
 import torchvision.transforms as transforms
 
-from config import batch_size, num_workers, epochs, lr, weight_decay
 from data.data_utils import load_train_data, load_test_data
 from model import CNN_classifier
 from model_utils import test_model, get_lr
 from tqdm import tqdm
-import matplotlib.pyplot as plt
-import numpy as np
 import torch.nn as nn
+
+from utils import get_args, imshow
+
+parser = argparse.ArgumentParser(description='Visualize Pretrained Models')
+
+args = get_args(parser)
+model_size = args.model_size
+if model_size not in ["big", "small"]:
+    print(f"Unknown {model_size} size for the model. Please choose from the list:[big, small]")
+    print("Exiting...")
+    exit(1)
+verbose = args.verbose
+batch_size = args.batch_size
+num_workers = args.num_workers
+lr = args.learning_rate
+weight_decay = args.weight_decay
+epochs = args.epochs
 
 transform = transforms.Compose(
     [transforms.ToTensor(),
@@ -21,14 +37,6 @@ test_loader, test_dataset = load_test_data(batch_size, num_workers)
 
 classes = ('plane', 'car', 'bird', 'cat',
            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
-
-
-# functions to show an image
-def imshow(img):
-    img = img / 2 + 0.5  # unnormalize
-    npimg = img.numpy()
-    plt.imshow(np.transpose(npimg, (1, 2, 0)))
-    plt.show()
 
 
 # get some random training images
@@ -43,7 +51,8 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 # Assuming that we are on a CUDA machine, this should print a CUDA device:
 
 print(device)
-net = CNN_classifier(device)
+
+net = CNN_classifier(device, model_size)
 net.to(device)
 # print(net)
 

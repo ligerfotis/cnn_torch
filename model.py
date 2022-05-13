@@ -7,12 +7,14 @@ stride = 1
 
 
 class CNN_classifier(torch.nn.Module):
-    def __init__(self, device):
+    def __init__(self, device, model_size):
         super().__init__()
         self.layers = []
         # self.hidden_layers = [64, 128, 256, 512, 512]
-        # hidden_layers = [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512]        # VGG11
-        self.hidden_layers = [64, 'M', 128, 'M', 256, 256]
+        if model_size == "big":
+            self.hidden_layers = [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512]        # VGG11
+        else:
+            self.hidden_layers = [64, 'M', 128, 'M', 256, 256]
         # hidden_layers = [64, 128, 256, 512]
         in_channels = 3
         adaptive_pooling_features = 4
