@@ -7,10 +7,13 @@ stride = 1
 
 
 class CNN_classifier(torch.nn.Module):
-    def __init__(self, device, args):
+    def __init__(self, device, args, image_shape, num_classes):
         super().__init__()
         self.layers = []
-        dropout_rate = args.dropout_rate
+        try:
+            dropout_rate = args.dropout_rate
+        except AttributeError:
+            dropout_rate = 0
         model_size = args.model_size
         if model_size not in ["big", "small"]:
             print(f"Unknown {model_size} size for the model. Please choose from the list:[big, small]")
@@ -23,8 +26,8 @@ class CNN_classifier(torch.nn.Module):
 
         else:
             self.hidden_layers = [64, 'M', 128, 'M', 256, 256]
-        # hidden_layers = [64, 128, 256, 512]
-        in_channels = 3
+        in_channels = image_shape[0]
+        # in_channels = 3
         adaptive_pooling_features = 7
         linear_dim_in = adaptive_pooling_features * adaptive_pooling_features * self.hidden_layers[-1]
         linear_dim_out = 8 * self.hidden_layers[-1]
@@ -40,7 +43,7 @@ class CNN_classifier(torch.nn.Module):
             torch.nn.Linear(linear_dim_out, linear_dim_out),
             torch.nn.ReLU(True),
             torch.nn.Dropout(dropout_rate),
-            torch.nn.Linear(linear_dim_out, 10),
+            torch.nn.Linear(linear_dim_out, num_classes),
         )
 
     def forward(self, x):

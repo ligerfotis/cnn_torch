@@ -6,7 +6,8 @@ def get_args(parser):
     # model type
     parser.add_argument('-m', '--model-size', default='small',
                         help='supports googlenet and vgg16')
-
+    parser.add_argument('-dn', '--dataset-name', default='CIFAR10',
+                        help='supports CIFAR10 and MNIST')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='print things')
     parser.add_argument('-bs', '--batch-size', default=512, type=int)
