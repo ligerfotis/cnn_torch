@@ -15,11 +15,7 @@ from utils import get_args, imshow
 parser = argparse.ArgumentParser(description='Visualize Pretrained Models')
 
 args = get_args(parser)
-model_size = args.model_size
-if model_size not in ["big", "small"]:
-    print(f"Unknown {model_size} size for the model. Please choose from the list:[big, small]")
-    print("Exiting...")
-    exit(1)
+
 verbose = args.verbose
 batch_size = args.batch_size
 num_workers = args.num_workers
@@ -52,7 +48,7 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 print(device)
 
-net = CNN_classifier(device, model_size)
+net = CNN_classifier(device, args)
 net.to(device)
 # print(net)
 

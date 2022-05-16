@@ -18,6 +18,8 @@ def get_args(parser):
     parser.add_argument('-nw', '--num-workers', default=16, type=int)
     parser.add_argument('-wd', '--weight-decay', default=1e-8, type=float)
 
+    parser.add_argument('-dr', '--dropout-rate', default=0.5, type=float)
+
     args = parser.parse_args()  # running in command line
 
     return args

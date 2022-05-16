@@ -11,12 +11,9 @@ def create_conv_encoder(in_channels, hidden_layers, device="cpu"):
     layers = []
     feature_map_size = input_height
 
-    # add the hidden layers in the encoder
-    if hidden_layers is None:
-        hidden_layers = [32, 64, 128, 256, 512]
-
     # Build Encoder
     for h_dim in hidden_layers[:-1]:
+        # print(h_dim)
         if h_dim == 'M':
             layers.append(torch.nn.MaxPool2d(kernel_size=2, stride=2))
         else:
