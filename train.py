@@ -1,4 +1,5 @@
 import argparse
+import os
 
 import torch
 import torchvision
@@ -80,6 +81,8 @@ for epoch in tqdm(range(epochs)):  # loop over the dataset multiple times
 print('Finished Training')
 
 PATH = './models/cifar_net.pth'
+if not os.path.isdir('./models'):
+    os.mkdir('./models')
 torch.save(net.state_dict(), PATH)
 
 dataiter = iter(test_loader)
