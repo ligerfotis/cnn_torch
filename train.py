@@ -78,8 +78,8 @@ for epoch in tqdm(range(epochs)):  # loop over the dataset multiple times
 print('Finished Training')
 
 PATH = f'./models/{dataset_name}_net_{model_size}.pth'
-if not os.path.isdir('./models'):
-    os.mkdir('./models')
+if not os.path.isdir(f'./models/{dataset_name}/'):
+    os.mkdir(f'./models/{dataset_name}/')
 torch.save(net.state_dict(), PATH)
 
 dataiter = iter(test_loader)
