@@ -25,7 +25,7 @@ def load_train_data(dataset, batch_size, num_workers):
     elif dataset in ["ImageNet", "Imagenet", "imagenet"]:
         # (Down)loading the ImageNet dataset
         train_dataset = datasets.ImageNet(
-            root="./data/datasets/ImageNet/train", train=True,
+            root="./data/datasets/imagenet-mini/train", train=True,
             transform=transforms.ToTensor())
 
     # Creating Dataloaders from the training dataset
@@ -55,9 +55,8 @@ def load_test_data(dataset, batch_size, num_workers):
     elif dataset in ["ImageNet", "Imagenet", "imagenet"]:
         # (Down)loading the ImageNet dataset
         test_dataset = datasets.ImageNet(
-            root="./data/datasets/ImageNet/test", train=False,
-            transform=transforms.ToTensor(),
-            download=True)
+            root="./data/datasets/imagenet-mini/val", train=False,
+            transform=transforms.ToTensor())
 
     # Creating Dataloaders from the testing dataset
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, num_workers=num_workers,
